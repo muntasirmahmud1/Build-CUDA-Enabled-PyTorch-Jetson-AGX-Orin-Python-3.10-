@@ -21,7 +21,7 @@ This guide documents how to build and install PyTorch **from source** with **CUD
 ```bash
 python3.10 -m venv ~/venvs/RAG_3_10
 source ~/venvs/RAG_3_10/bin/activate
-
+```
 
 ## Install Required Python Packages
 
