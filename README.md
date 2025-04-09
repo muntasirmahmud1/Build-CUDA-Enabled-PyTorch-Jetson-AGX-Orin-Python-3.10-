@@ -28,12 +28,14 @@ source ~/venvs/RAG_3_10/bin/activate
 ```bash
 pip install --upgrade pip
 pip install numpy==1.23.5 typing-extensions filelock sympy networkx jinja2 ninja
+```
 
 ## ⬇️ Clone PyTorch with Submodules
 
 ```bash
 git clone --recursive --branch v2.0.1 https://github.com/pytorch/pytorch.git
 cd pytorch
+```
 
 ## ⚙️ Modify CUDA Architectures (Add 8.7 Support)
 
@@ -41,6 +43,7 @@ Edit the file:
 
 ```bash
 gedit torch/utils/cpp_extension.py
+```
 
 Locate the supported_arches list and add "8.7":
 
@@ -51,6 +54,7 @@ supported_arches = [
   '7.5', '8.0', '8.6', '8.7',  # 👈 Add this line
   '8.9', '9.0'
 ]
+```
 
 ## 🔧 Fix CMake Compatibility in Submodules
 
@@ -63,14 +67,15 @@ find . -type f \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
   -exec sed -i -E 's/^[[:space:]]*(cmake_minimum_required\(VERSION )[0-9.]+/\13.25/' {} +
 EOF
 
-```bash
 chmod +x fix_cmake_min_versions.sh
 ./fix_cmake_min_versions.sh
+```
 
 ## 🧹 Clean Previous Builds
 
 ```bash
 rm -rf build/ dist/ CMakeCache.txt CMakeFiles/
+```
 
 ## 🛠️ Configure Build with CMake + Ninja
 
@@ -95,30 +100,34 @@ cmake .. \
   -DUSE_NUMPY=True \
   -DUSE_PYTORCH_QNNPACK=0 \
   -DUSE_QNNPACK=0
+```
 
 ## ⚙️ Build PyTorch
 
 ```bash
 ninja
 ninja install
+```
 
 ## 📦 Build Wheel
 
 ```bash
 cd ~/pytorch
 python setup.py bdist_wheel
+```
 
 ## 🚀 Install the Wheel
 
 ```bash
 pip install dist/torch-2.0.0a0+gite9ebda2-cp310-cp310-linux_aarch64.whl
-
-    ✅ Replace with the actual wheel file name in your dist/ directory if it’s different.
+```
+Replace with the actual wheel file name in your dist/ directory if it’s different.
 
 ## ✅ Verify Installation
 
 ```bash
 python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
+```
 
 Expected output:
 
@@ -126,3 +135,4 @@ Expected output:
 2.0.0a0+gite9ebda2
 True
 Orin
+```
